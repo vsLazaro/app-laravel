@@ -54,18 +54,24 @@
   </AppLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue'
 import Heading from '@/components/Heading.vue'
 
-defineProps({
-  products: {
-    type: Array,
-    default: () => []
-  }
+interface Product {
+  id: number
+  name: string
+  description: string
+  price: number
+}
+
+withDefaults(defineProps<{
+  products?: Product[]
+}>(), {
+  products: () => []
 })
 
-function formatPrice(price) {
+function formatPrice(price: number): string {
   return new Intl.NumberFormat('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
