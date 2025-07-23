@@ -37,7 +37,21 @@ RUN apk add --no-cache \
     curl
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip opcache
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+        pdo \
+        pdo_mysql \
+        zip \
+        opcache \
+        dom \
+        xml \
+        xmlwriter \
+        xmlreader \
+        simplexml \
+        mbstring \
+        tokenizer \
+        fileinfo \
+        json
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -68,6 +82,10 @@ RUN apk add --no-cache \
     php82-curl \
     php82-mbstring \
     php82-xml \
+    php82-xmlwriter \
+    php82-xmlreader \
+    php82-simplexml \
+    php82-dom \
     php82-tokenizer \
     php82-session \
     php82-fileinfo \
