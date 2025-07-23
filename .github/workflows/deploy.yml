@@ -107,17 +107,6 @@ jobs:
             echo '✅ Docker está instalado'
           fi
           
-          # Verificar se usuário está no grupo docker
-          if ! groups | grep -q docker; then
-            echo '❌ ERRO: Usuário não está no grupo docker!'
-            echo '📋 Para adicionar ao grupo, execute no VPS:'
-            echo '   sudo usermod -aG docker $USER'
-            echo '   newgrp docker'
-            exit 1
-          else
-            echo '✅ Usuário está no grupo docker'
-          fi
-          
           # Parar e remover container anterior (se existir)
           echo 'Parando container anterior...'
           docker stop $CONTAINER_NAME 2>/dev/null || true
