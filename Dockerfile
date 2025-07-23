@@ -154,6 +154,25 @@ EOF
 RUN chmod -R 755 /var/www/html && \
     chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Create a simple startup script to clear Laravel cache
+COPY <<EOF /usr/local/bin/laravel-startup.sh
+#!/bin/sh
+echo "🚀 Iniciando Laravel..."
+
+# Clear any cached config that might interfere with env vars
+cd /var/www/html
+php artisan config:clear || true
+php artisan cache:clear || true
+php artisan view:clear || true
+
+echo "✅ Cache limpo, ambiente configurado!"
+
+# Start supervisor
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+EOF
+
+RUN chmod +x /usr/local/bin/laravel-startup.sh
+
 EXPOSE 80
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"] 
+CMD ["/usr/local/bin/laravel-startup.sh"] 
