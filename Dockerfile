@@ -115,11 +115,11 @@ EOF
 # Copy PHP-FPM configuration
 COPY <<EOF /etc/php82/php-fpm.d/www.conf
 [www]
-user = www-data
-group = www-data
+user = nginx
+group = nginx
 listen = 127.0.0.1:9000
-listen.owner = www-data
-listen.group = www-data
+listen.owner = nginx
+listen.group = nginx
 pm = dynamic
 pm.max_children = 50
 pm.start_servers = 5
@@ -152,9 +152,9 @@ stderr_logfile=/dev/stderr
 stderr_logfile_maxbytes=0
 EOF
 
-# Set proper permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Set basic permissions
+RUN chmod -R 755 /var/www/html && \
+    chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 80
 
