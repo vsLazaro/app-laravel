@@ -44,14 +44,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         zip \
         opcache \
         dom \
-        xml \
-        xmlwriter \
-        xmlreader \
-        simplexml \
-        mbstring \
-        tokenizer \
-        fileinfo \
-        json
+        xml
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -82,9 +75,6 @@ RUN apk add --no-cache \
     php82-curl \
     php82-mbstring \
     php82-xml \
-    php82-xmlwriter \
-    php82-xmlreader \
-    php82-simplexml \
     php82-dom \
     php82-tokenizer \
     php82-session \
