@@ -36,16 +36,6 @@ RUN apk add --no-cache \
     git \
     curl
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        gd \
-        pdo \
-        pdo_mysql \
-        zip \
-        opcache \
-        dom \
-        xml
-
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
