@@ -42,15 +42,12 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy composer files
-COPY composer.json composer.lock ./
+# Copy application files first
+COPY . .
+COPY --from=frontend-builder /app/public/build public/build
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Copy application files
-COPY . .
-COPY --from=frontend-builder /app/public/build public/build
 
 # Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \

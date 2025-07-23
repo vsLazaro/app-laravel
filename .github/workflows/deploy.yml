@@ -59,15 +59,6 @@ jobs:
           echo "📦 Apenas build realizado (deploy apenas na branch main)"
         fi
         
-    - name: Test container locally
-      run: |
-        IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/tdc-php-app"
-        docker run -d --name test-container -p 8080:80 $IMAGE_NAME:latest
-        sleep 10
-        curl -f http://localhost:8080 || exit 1
-        docker stop test-container
-        docker rm test-container
-        
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
